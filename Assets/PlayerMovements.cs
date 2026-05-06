@@ -1,31 +1,51 @@
 using UnityEngine;
-using System.Collections;
 
 public class PlayerMovements : MonoBehaviour
 {
     private Animator animator;
 
-    [SerializeField] private float jumpDuration = 0.8f;
+    [Header("Lane Settings")]
+    [SerializeField] private float laneDistance = 0.5f; // distance between lanes
+    [SerializeField] private float laneChangeSpeed = 10f;
+
+    private int currentLane = 0; // -1 = left, 0 = center, 1 = right
+    private float targetX;
 
     void Start()
     {
         animator = GetComponent<Animator>();
+        targetX = transform.position.x;
     }
 
     void Update()
     {
+        // INPUT
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(JumpRoutine());
+            animator.SetTrigger("Jump");
         }
+
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            MoveLane(-1);
+            animator.SetTrigger("RunLeft");
+        }
+
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            MoveLane(1);
+            animator.SetTrigger("RunRight");
+        }
+
+        // SMOOTH MOVEMENT
+        Vector3 pos = transform.position;
+        pos.x = Mathf.Lerp(pos.x, targetX, laneChangeSpeed * Time.deltaTime);
+        transform.position = pos;
     }
 
-    IEnumerator JumpRoutine()
+    void MoveLane(int direction)
     {
-        animator.SetBool("isJumping", true);
-
-        yield return new WaitForSeconds(jumpDuration);
-
-        animator.SetBool("isJumping", false);
+        currentLane = Mathf.Clamp(currentLane + direction, -1, 1);
+        targetX = currentLane * laneDistance;
     }
 }
