@@ -384,6 +384,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   laneDistance: 1.3
   laneChangeSpeed: 10
+  jumpHeight: 1
+  jumpDuration: 0.3
 --- !u!54 &360905620
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -917,7 +919,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstaclePrefab: {fileID: 7522872192295485866, guid: 6ee3776b596453f48997b3ff8a377fbd, type: 3}
   coinPrefab: {fileID: 7595441958756454490, guid: db9c67b394031b149892ed97a8688d3d, type: 3}
+  logPrefab: {fileID: 2862540952836024106, guid: b64c756b5efc95245abc1b57edb6cfc7, type: 3}
   coinSpawnChance: 0.302
+  logSpawnChance: 0.281
   minSpawnTime: 0.5
   maxSpawnTime: 2
   spawnZ: 30
