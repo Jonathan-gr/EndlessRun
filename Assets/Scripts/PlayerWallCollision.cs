@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerWallCollision : MonoBehaviour
 {
     [SerializeField] private GameObject loseButton; // Drag Button here
+    [SerializeField] private GameObject GameOverText;
 
     [SerializeField] private GameObject starPrefab; // Drag Button here
 
@@ -38,8 +39,9 @@ public class PlayerWallCollision : MonoBehaviour
                 shakeScript.StartShaking();
             }
         }
-        Instantiate(starPrefab, transform.position + new Vector3(1, 0, 0), Quaternion.identity);
-        Instantiate(starPrefab, transform.position + new Vector3(-1, 0, 0), Quaternion.identity);
+        GameOverText.SetActive(true);
+        Instantiate(starPrefab, new Vector3(1.5f, 1.5f, -6), Quaternion.identity);
+        Instantiate(starPrefab, new Vector3(-1.5f, 1.5f, -6), Quaternion.identity);
 
         // 3. Freeze the game world
         Time.timeScale = 0f;

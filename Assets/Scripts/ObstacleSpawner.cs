@@ -16,6 +16,8 @@ public class ObstacleSpawner : MonoBehaviour
     [Range(0f, 1f)] public float rightLogChance = 0.25f;
     [Range(0f, 1f)] public float fullLogChance = 0.25f;
 
+    [Range(0f, 1f)] public float coinOnLogChance = 0.5f;
+
     [Header("Wall Sub-Spawn Rates")]
     [Range(0f, 1f)] public float leftWallChance = 0.2f;
     [Range(0f, 1f)] public float rightWallChance = 0.2f;
@@ -100,6 +102,14 @@ public class ObstacleSpawner : MonoBehaviour
                 // These are your "Original" values from your first screenshot
                 newLog.transform.position = new Vector3(-1.3f, 0.3f, spawnZ);
                 newLog.transform.localScale = new Vector3(0.5f, 0.7f, 0.3f);
+            }
+            if (Random.value < coinOnLogChance)
+            {
+                // Use the log's exact position but raise the Y for the jump
+                Vector3 coinPos = newLog.transform.position;
+                coinPos.y = coinHeight;
+
+                Instantiate(coinPrefab, coinPos, Quaternion.Euler(90f, 0f, 0f));
             }
         }
 
