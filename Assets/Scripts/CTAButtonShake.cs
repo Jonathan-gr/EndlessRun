@@ -18,6 +18,14 @@ public class ShakeButton : MonoBehaviour
     private Image buttonImage;
     private Coroutine shakeRoutine;
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            GameManager.Instance.RestartGame();
+        }
+    }
+
     private void Awake()
     {
         originalRotation = transform.eulerAngles;
@@ -28,6 +36,7 @@ public class ShakeButton : MonoBehaviour
     {
         if (shakeRoutine == null)
         {
+
             shakeRoutine = StartCoroutine(ShakeLoop());
         }
     }

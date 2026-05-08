@@ -109,10 +109,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.0133637
-  m_Height: 20.267275
+  m_Radius: 1.5459343
+  m_Height: 30.918686
   m_Direction: 1
-  m_Center: {x: 0.004297097, y: 1.7320523, z: -0.09043266}
+  m_Center: {x: 0.004297097, y: 0.41572848, z: -0.11500756}
 --- !u!114 &402120370744975632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,5 +152,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinParticlePrefab: {fileID: 2758410461372960898, guid: b8bc1c0605f1e0348a86ffb8af49ceea, type: 3}
-  scoreManager: {fileID: 0}
   coinBonus: 50

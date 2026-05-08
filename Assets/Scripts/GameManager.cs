@@ -4,13 +4,14 @@ public class GameManager : MonoBehaviour
 {
     public static float GameSpeed;
     [SerializeField] private float speedIncreaseRate = 0.5f;
-
+    public static GameManager Instance;
     [SerializeField] private float gameSpeed = 10f;
 
     private bool gameOver = false;
     void Awake()
     {
         GameSpeed = gameSpeed;
+        Instance = this;
     }
 
     void Update()

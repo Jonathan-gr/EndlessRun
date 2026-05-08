@@ -6,6 +6,7 @@ public class PlayerWallCollision : MonoBehaviour
     [SerializeField] private GameObject GameOverText;
 
     [SerializeField] private GameObject starPrefab; // Drag Button here
+    [SerializeField] private AudioSource musicSource;
 
     public ScoreManager scoreManager;
     private bool isDead = false;
@@ -40,6 +41,7 @@ public class PlayerWallCollision : MonoBehaviour
                 shakeScript.StartShaking();
             }
         }
+        musicSource.Stop();
         GameOverText.SetActive(true);
         Instantiate(starPrefab, new Vector3(1.5f, 1.5f, -6), Quaternion.identity);
         Instantiate(starPrefab, new Vector3(-1.5f, 1.5f, -6), Quaternion.identity);
