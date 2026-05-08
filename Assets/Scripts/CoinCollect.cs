@@ -28,6 +28,7 @@ public class CoinPickup : MonoBehaviour
         {
             scoreManager.AddCoinScore(coinBonus);
         }
+        PlayerAudio.Instance.PlayCoinSound();
 
         Instantiate(coinParticlePrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);

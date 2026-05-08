@@ -26,6 +26,7 @@ public class PlayerWallCollision : MonoBehaviour
     {
         isDead = true;
         scoreManager.StopScore();
+        PlayerAudio.Instance.PlayCrashSound();
 
         // 1. Show the button
         if (loseButton != null)
