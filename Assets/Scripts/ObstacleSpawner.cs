@@ -11,6 +11,15 @@ public class ObstacleSpawner : MonoBehaviour
     [Range(0f, 1f)] public float logSpawnChance = 0.2f;  // 20%
     // Remaining 60% will be obstacles
 
+    [Header("Log Sub-Spawn Rates")]
+    [Range(0f, 1f)] public float leftLogChance = 0.25f;
+    [Range(0f, 1f)] public float rightLogChance = 0.25f;
+    [Range(0f, 1f)] public float fullLogChance = 0.25f;
+
+    [Header("Wall Sub-Spawn Rates")]
+    [Range(0f, 1f)] public float leftWallChance = 0.2f;
+    [Range(0f, 1f)] public float rightWallChance = 0.2f;
+
     [Header("Timing")]
     [SerializeField] private float minSpawnTime = 1f;
     [SerializeField] private float maxSpawnTime = 3f;
@@ -64,14 +73,62 @@ public class ObstacleSpawner : MonoBehaviour
         // 2. Check for Log (Rotation Z = 90)
         else if (randomVal < coinSpawnChance + logSpawnChance)
         {
-            Vector3 spawnPos = new Vector3(xPos, 0.3f, spawnZ);
-            Instantiate(logPrefab, spawnPos, Quaternion.Euler(0f, 0f, 90f));
+            float logRandom = Random.value;
+            GameObject newLog = Instantiate(logPrefab, new Vector3(0, 0.3f, spawnZ), Quaternion.Euler(0, 0, 90));
+
+            // 1. LEFT LOG
+            if (logRandom < leftLogChance)
+            {
+                newLog.transform.position = new Vector3(-1.07f, 0.3f, spawnZ);
+                newLog.transform.localScale = new Vector3(0.5f, 1.79f, 0.3f);
+            }
+            // 2. RIGHT LOG
+            else if (logRandom < leftLogChance + rightLogChance)
+            {
+                newLog.transform.position = new Vector3(1.07f, 0.3f, spawnZ);
+                newLog.transform.localScale = new Vector3(0.5f, 1.79f, 0.3f);
+            }
+            // 3. FULL LOG (Extra Long)
+            else if (logRandom < leftLogChance + rightLogChance + fullLogChance)
+            {
+                newLog.transform.position = new Vector3(0.04f, 0.3f, spawnZ);
+                newLog.transform.localScale = new Vector3(0.5f, 2.89f, 0.3f);
+            }
+            // 4. REGULAR LOG (Original Size/Pos)
+            else
+            {
+                // These are your "Original" values from your first screenshot
+                newLog.transform.position = new Vector3(-1.3f, 0.3f, spawnZ);
+                newLog.transform.localScale = new Vector3(0.5f, 0.7f, 0.3f);
+            }
         }
+
         // 3. Otherwise, spawn Obstacle
         else
         {
-            Vector3 spawnPos = new Vector3(xPos, 0.5f, spawnZ);
-            Instantiate(obstaclePrefab, spawnPos, Quaternion.identity);
+            float wallRandom = Random.value;
+            // Spawn at 0.5f height for ground objects
+            GameObject newWall = Instantiate(obstaclePrefab, new Vector3(0, 0.5f, spawnZ), Quaternion.identity);
+
+            // 1. LEFT WALL
+            if (wallRandom < leftWallChance)
+            {
+                newWall.transform.position = new Vector3(-1.31f, 0.59f, spawnZ);
+                newWall.transform.localScale = new Vector3(3.38f, 4.4f, 0.3f);
+            }
+            // 2. RIGHT WALL (Mirrored X)
+            else if (wallRandom < leftWallChance + rightWallChance)
+            {
+                newWall.transform.position = new Vector3(1.31f, 0.59f, spawnZ);
+                newWall.transform.localScale = new Vector3(3.38f, 4.4f, 0.3f);
+            }
+            // 3. REGULAR WALL (Original Settings)
+            else
+            {
+                // Use the values from your newest screenshot to keep it "Original"
+                newWall.transform.position = new Vector3(-1.8f, 0.59f, spawnZ);
+                newWall.transform.localScale = new Vector3(1.18f, 4.4f, 0.3f);
+            }
         }
     }
 }

@@ -5,12 +5,17 @@ public class PlayerWallCollision : MonoBehaviour
     [SerializeField] private GameObject loseButton; // Drag Button here
 
     [SerializeField] private GameObject starPrefab; // Drag Button here
+
+    public ScoreManager scoreManager;
     private bool isDead = false;
 
     private void OnCollisionEnter(Collision collision)
+
+
     {
+
         // Ensure your walls are tagged "Wall"
-        if (collision.gameObject.CompareTag("Wall") && !isDead)
+        if (collision.gameObject.CompareTag("Wall") && !isDead || collision.gameObject.CompareTag("Log") && !isDead)
         {
             Die();
         }
@@ -19,6 +24,7 @@ public class PlayerWallCollision : MonoBehaviour
     void Die()
     {
         isDead = true;
+        scoreManager.StopScore();
 
         // 1. Show the button
         if (loseButton != null)

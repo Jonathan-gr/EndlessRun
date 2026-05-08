@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static float GameSpeed;
@@ -22,5 +22,15 @@ public class GameManager : MonoBehaviour
     public void SetGameOver()
     {
         gameOver = true;
+    }
+
+    public void RestartGame()
+    {
+        Debug.Log("restarting game");
+        // 1. Reset time so the game actually moves
+        Time.timeScale = 1f;
+
+        // 2. Reload the currently active scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
