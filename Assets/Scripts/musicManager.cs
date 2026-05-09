@@ -45,6 +45,8 @@ public class MusicManager : MonoBehaviour
 
     void PlayTrack(int index)
     {
+        audioSource.Stop();
+
         audioSource.clip = musicTracks[index];
         audioSource.Play();
     }

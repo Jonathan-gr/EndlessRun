@@ -36,6 +36,9 @@ public class ObstacleSpawner : MonoBehaviour
     private float timer;
     public float coinHeight = 1.5f;
 
+    public float GameSpeedThreshhold = 25f;
+    public float GameSpeedThreshholdDelta = 5f;
+
     void Awake()
     {
         laneXPositions = new float[] { leftSpawnPoint, 0f, rightSpawnPoint };
@@ -44,6 +47,22 @@ public class ObstacleSpawner : MonoBehaviour
 
     void Update()
     {
+
+
+        // 1. Use the actual Threshold variable to check
+        if (GameManager.GameSpeed > GameSpeedThreshhold)
+        {
+            // 2. Increase the threshold so this block doesn't run again 
+            // until the NEXT milestone (e.g., 25, then 35, then 45...)
+            GameSpeedThreshhold += GameSpeedThreshholdDelta;
+
+            // 3. Decrease times but CAP them so they don't go below a playable limit
+            // (e.g., never faster than 0.3 seconds)
+            minSpawnTime = Mathf.Max(0.1f, minSpawnTime - 0.1f);
+            maxSpawnTime = Mathf.Max(0.3f, maxSpawnTime - 0.1f);
+
+
+        }
         timer += Time.deltaTime;
 
         if (timer >= nextSpawnTime)
