@@ -2,23 +2,44 @@ using UnityEngine;
 
 public class PlayerWallCollision : MonoBehaviour
 {
-    [SerializeField] private GameObject loseButton; // Drag Button here
+    [SerializeField] private GameObject loseButton;
     [SerializeField] private GameObject GameOverText;
+    [SerializeField] private GameObject starPrefab;
 
-    [SerializeField] private GameObject starPrefab; // Drag Button here
+    [SerializeField] private GameObject wallBreakPrefab;
     [SerializeField] private AudioSource musicSource;
 
     public ScoreManager scoreManager;
+    private PlayerInvincibility invincibility;
     private bool isDead = false;
 
-    private void OnCollisionEnter(Collision collision)
-
-
+    private void Start()
     {
+        invincibility = GetComponent<PlayerInvincibility>();
+    }
 
-        // Ensure your walls are tagged "Wall"
-        if (collision.gameObject.CompareTag("Wall") && !isDead || collision.gameObject.CompareTag("Log") && !isDead)
+    private void OnCollisionEnter(Collision collision)
+    {
+        bool hitWall = collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Log");
+
+        if (!hitWall || isDead) return;
+        PlayerAudio.Instance.PlayCrashSound();
+        if (invincibility != null && invincibility.IsInvincible)
         {
+            Vector3 wallPosition = collision.transform.position;
+            Destroy(collision.gameObject);
+            Instantiate(wallBreakPrefab, wallPosition, Quaternion.identity);
+
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.linearVelocity = new Vector3(0f, 0f, rb.linearVelocity.z);
+                rb.angularVelocity = Vector3.zero;
+            }
+        }
+        else
+        {
+
             Die();
         }
     }
@@ -27,26 +48,19 @@ public class PlayerWallCollision : MonoBehaviour
     {
         isDead = true;
         scoreManager.StopScore();
-        PlayerAudio.Instance.PlayCrashSound();
 
-        // 1. Show the button
         if (loseButton != null)
         {
             loseButton.SetActive(true);
-
-            // 2. Trigger the shake effect
             ShakeButton shakeScript = loseButton.GetComponent<ShakeButton>();
-            if (shakeScript != null)
-            {
-                shakeScript.StartShaking();
-            }
+            if (shakeScript != null) shakeScript.StartShaking();
         }
+
         musicSource.Stop();
         GameOverText.SetActive(true);
         Instantiate(starPrefab, new Vector3(1.5f, 1.5f, -6), Quaternion.identity);
         Instantiate(starPrefab, new Vector3(-1.5f, 1.5f, -6), Quaternion.identity);
 
-        // 3. Freeze the game world
         Time.timeScale = 0f;
     }
 }

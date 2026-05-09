@@ -9,6 +9,9 @@ public class PlayerAudio : MonoBehaviour
 
     [SerializeField] private AudioClip wallCrashSound;
 
+    [SerializeField] private AudioClip shieldSound;
+    [SerializeField] private AudioClip shieldDownSound;
+
     private void Awake()
     {
         Instance = this;
@@ -22,5 +25,14 @@ public class PlayerAudio : MonoBehaviour
     public void PlayCrashSound()
     {
         audioSource.PlayOneShot(wallCrashSound);
+    }
+
+    public void PlayShieldSound()
+    {
+        audioSource.PlayOneShot(shieldSound);
+    }
+    public void PlayShieldDownSound()
+    {
+        audioSource.PlayOneShot(shieldDownSound);
     }
 }

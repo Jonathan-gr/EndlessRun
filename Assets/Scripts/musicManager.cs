@@ -1,26 +1,42 @@
 using UnityEngine;
-using UnityEngine.InputSystem.Interactions;
 
 public class MusicManager : MonoBehaviour
 {
-    [Header("Music")]
+    [Header("Audio Components")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip[] musicTracks;
 
+    [Header("Volume Settings")]
+    [Range(0f, 1f)] public float masterVolume = 0.5f; // Slider to control "weakness"
+
     private int currentTrack = 0;
 
+    private void Start()
+    {
+        // Safety check in case you forgot to drag the AudioSource
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
+
+        PlayTrack(currentTrack);
+    }
 
     void Update()
     {
+        // This allows you to change the volume slider in the 
+        // Inspector and hear it change immediately while playing.
+        audioSource.volume = masterVolume;
+
+        // Press E to skip to next track
         if (Input.GetKeyDown(KeyCode.E))
         {
             NextTrack();
-
         }
-    }
-    private void Start()
-    {
-        PlayTrack(currentTrack);
+
+        // Press Q to go to previous track (Optional)
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            PreviousTrack();
+        }
     }
 
     public void NextTrack()
@@ -45,9 +61,11 @@ public class MusicManager : MonoBehaviour
 
     void PlayTrack(int index)
     {
-        audioSource.Stop();
+        if (musicTracks.Length == 0) return;
 
+        audioSource.Stop();
         audioSource.clip = musicTracks[index];
+        audioSource.volume = masterVolume;
         audioSource.Play();
     }
 }
