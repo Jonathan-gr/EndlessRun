@@ -1279,6 +1279,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4185926301484882913, guid: a1e89b5b3306eda45bd7a58768d1e7cc, type: 3}
+      propertyPath: m_text
+      value: 'Restart '
+      objectReference: {fileID: 0}
     - target: {fileID: 4782223067510596631, guid: a1e89b5b3306eda45bd7a58768d1e7cc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1314,6 +1318,10 @@ PrefabInstance:
     - target: {fileID: 7941959220208074437, guid: a1e89b5b3306eda45bd7a58768d1e7cc, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8073344015802789732, guid: a1e89b5b3306eda45bd7a58768d1e7cc, type: 3}
+      propertyPath: m_Name
+      value: RestartButton
       objectReference: {fileID: 0}
     - target: {fileID: 8073344015802789732, guid: a1e89b5b3306eda45bd7a58768d1e7cc, type: 3}
       propertyPath: m_IsActive
@@ -1380,7 +1388,7 @@ MonoBehaviour:
   shieldPrefab: {fileID: 4457483850110409168, guid: b008c804f755d5f449d8889ef4fe6d82, type: 3}
   coinSpawnChance: 0.2
   logSpawnChance: 0.3
-  shieldSpawnChance: 0.033
+  shieldSpawnChance: 0.02
   leftLogChance: 0.25
   rightLogChance: 0.25
   fullLogChance: 0.25
@@ -1770,7 +1778,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 06e3e621188ef4245b5618f6f9641dbd, type: 3}
   - {fileID: 8300000, guid: 842eb4dc62dc6ec4cb3141aac0d4f789, type: 3}
   - {fileID: 8300000, guid: 31de0c8cc56a22a4e81d235aa71a8253, type: 3}
-  masterVolume: 0.5
+  masterVolume: 0.162
 --- !u!1 &1240968765
 GameObject:
   m_ObjectHideFlags: 0
